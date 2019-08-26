@@ -1,0 +1,20 @@
+<div>
+    <textarea #titleInput></textarea>
+</div>
+<div>
+    <button (click) = 'validateMaze(titleInput.value)'>Validate</button>
+</div>
+
+<div *ngIf="mazeToTest && mazeToTest.isValid()">
+  <div>
+      <label>Your maze input is valid</label>
+  </div>
+  <div>
+    <label class='maze-data-allignment'>The total Count of Walls is:{{mazeToTest.getWallsCount()}}</label>
+    <label class='maze-data-allignment'>The total Count of Empty Space is:{{mazeToTest.getEmptySpaceCount()}}</label>
+  </div>
+</div>
+
+<div *ngIf="mazeToTest && !mazeToTest.isValid()">
+    <label>Your maze input is InValid</label>
+</div>
