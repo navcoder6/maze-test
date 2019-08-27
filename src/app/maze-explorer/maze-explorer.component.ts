@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Maze } from 'src/app/maze-explorer/maze/maze';
 import { MazeExplorer } from 'src/app/maze-explorer/explorer/famous-maze-explorer';
 
@@ -7,22 +7,42 @@ import { MazeExplorer } from 'src/app/maze-explorer/explorer/famous-maze-explore
   templateUrl: './maze-explorer.component.html',
   styleUrls: ['./maze-explorer.component.css']
 })
-export class MazeExplorerComponent implements OnInit {
+export class MazeExplorerComponent implements OnInit, OnDestroy {
 
-  mazeToTest:Maze;
+  mazeToExplore: Maze;
+  mazeExplorer: MazeExplorer;
+  mazeInput:string;
+  isExploring:boolean = false;
+
   constructor() {
   }
 
   ngOnInit() {
   }
 
-  validateMaze(mazeInput) {
-    this.mazeToTest = new Maze(mazeInput);
+  validateMaze() {
+    this.mazeToExplore = new Maze(this.mazeInput);
 
-    if(this.mazeToTest.isValid()){
-      const mazeExplorerToTest = new MazeExplorer();
-      mazeExplorerToTest.setMaze(this.mazeToTest);
+    if (this.mazeToExplore.isValid()) {
+      this.mazeExplorer = new MazeExplorer();
+      this.mazeExplorer.setMaze(this.mazeToExplore);
     }
+  }
+
+  reset(){
+    this.mazeToExplore = null;
+    this.mazeExplorer = null;
+    this.mazeInput = null;
+    this.isExploring = false;
+  }
+
+  exploreMaze() {
+    this.isExploring = true;
+  }
+
+  ngOnDestroy() {
+    this.mazeToExplore.dispose();
+    this.mazeExplorer.dispose();
   }
 
 }

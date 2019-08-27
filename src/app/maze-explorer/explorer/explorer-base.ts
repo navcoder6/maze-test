@@ -1,9 +1,8 @@
 export interface IExplorer {
-    setMaze(mazeToExplore);
     moveForward();
     turnLeft();
     turnRight();
-    getInFrontItem(directionToLook);
+    getInFrontItem();
     getAllMovementOptions();
     getTraversedRecords();
     getRouteDetails();

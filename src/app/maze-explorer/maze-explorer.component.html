@@ -1,20 +1,44 @@
 <div>
-    <textarea #titleInput></textarea>
+    <textarea matInput [(ngModel)]="mazeInput"></textarea>
 </div>
 <div>
-    <button (click) = 'validateMaze(titleInput.value)'>Validate</button>
+        <div *ngIf="!mazeToExplore || !mazeToExplore.isValid()">
+            <button mat-raised-button color="primary" (click) = 'validateMaze()'>Validate</button>
+        </div>
+    <div *ngIf="mazeToExplore && mazeToExplore.isValid()">
+        <button mat-raised-button color="primary" (click) = 'exploreMaze()'>Explore</button>
+        <button mat-raised-button color="primary" (click) = 'reset()'>Reset</button>
+    </div>
 </div>
 
-<div *ngIf="mazeToTest && mazeToTest.isValid()">
-  <div>
-      <label>Your maze input is valid</label>
-  </div>
-  <div>
-    <label class='maze-data-allignment'>The total Count of Walls is:{{mazeToTest.getWallsCount()}}</label>
-    <label class='maze-data-allignment'>The total Count of Empty Space is:{{mazeToTest.getEmptySpaceCount()}}</label>
-  </div>
-</div>
+<div *ngIf="!isExploring">
+    <div *ngIf="mazeToExplore && mazeToExplore.isValid()">
+    <div>
+        <label>Your maze input is valid</label>
+    </div>
+    <!-- <div>
+        <label class='maze-data-allignment'>The total Count of Walls is:{{mazeToExplore.getWallsCount()}}</label>
+        <label class='maze-data-allignment'>The total Count of Empty Space is:{{mazeToExplore.getEmptySpaceCount()}}</label>
+    </div> -->
+    <div class="maze-detail-boundary">
+        <mat-list>
+            <mat-list-item>The total Count of Walls is: {{mazeToExplore.getWallsCount()}}</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>The total Count of Empty Space is: {{mazeToExplore.getEmptySpaceCount()}}</mat-list-item>
+        </mat-list>
+    </div>
+    </div>
 
-<div *ngIf="mazeToTest && !mazeToTest.isValid()">
-    <label>Your maze input is InValid</label>
+    <div *ngIf="mazeToExplore && !mazeToExplore.isValid()">
+        <label>Your maze input is InValid</label>
+    </div>
+</div>
+<div *ngIf="isExploring">
+        <div class="maze-detail-boundary">
+                <mat-list>
+                    <mat-list-item>You have {{mazeExplorer.getInFrontItem()}} in front of you</mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>Your possible movement options are: {{mazeExplorer.getAllMovementOptions()}}</mat-list-item>
+                </mat-list>
+            </div>
 </div>

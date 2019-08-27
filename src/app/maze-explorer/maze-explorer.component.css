@@ -1,3 +1,7 @@
 .maze-data-allignment {
     display: block;
 }
+
+.maze-detail-boundary {
+    width: 50%;
+}

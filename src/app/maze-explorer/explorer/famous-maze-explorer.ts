@@ -54,7 +54,7 @@ export class MazeExplorer implements IExplorer {
      */
     public moveForward() {
         // Before moving forward chk if wall is not present
-        const forwardItemInfo = this.getInFrontItem(this.currentDirection);
+        const forwardItemInfo = this.getInFrontItemBasedOnDirection(this.currentDirection);
         if (forwardItemInfo.item !== Utils.MazeContents.WALL) {
             this.currentLocation = forwardItemInfo.location;
 
@@ -125,9 +125,17 @@ export class MazeExplorer implements IExplorer {
     }
 
     /**
+     * Method to get the item in front depending upon current direction
+     */
+    public getInFrontItem() {
+        const item = this.getInFrontItemBasedOnDirection(this.currentDirection).item;
+        return _.findKey(Utils.MazeContents,(content)=>content === item);
+    }
+
+    /**
      * Method to get the item in front depending upon the direction asked
      */
-    public getInFrontItem(directionToLook: Utils.MazeExplorerDirection): Utils.IFrontItemInfo {
+    private getInFrontItemBasedOnDirection(directionToLook: Utils.MazeExplorerDirection): Utils.IFrontItemInfo {
         let frontPosition: Coordinate;
         let frontItem: string;
 
@@ -142,7 +150,7 @@ export class MazeExplorer implements IExplorer {
                 break;
             case Utils.MazeExplorerDirection.SOUTH:
 
-                frontPosition.setY(frontPosition.getX() + 1)
+                frontPosition.setX(frontPosition.getX() + 1)
                 frontItem = this.mazeToExplore.getValueAt(frontPosition);
 
                 break;
@@ -154,7 +162,7 @@ export class MazeExplorer implements IExplorer {
                 break;
             case Utils.MazeExplorerDirection.NORTH:
 
-                frontPosition.setY(frontPosition.getX() - 1)
+                frontPosition.setX(frontPosition.getX() - 1)
                 frontItem = this.mazeToExplore.getValueAt(frontPosition);
 
                 break;
@@ -179,7 +187,8 @@ export class MazeExplorer implements IExplorer {
     public getAllMovementOptions() {
         let possibleOptions: Utils.MazeExplorerDirection[] = [];
         _.forIn(Utils.MazeExplorerDirection, (direction) => {
-            if (this.getInFrontItem(direction).item !== Utils.MazeContents.WALL) {
+            const itemInFront = this.getInFrontItemBasedOnDirection(direction).item;
+            if ( itemInFront && (itemInFront!== Utils.MazeContents.WALL)) {
                 possibleOptions.push(direction);
             }
         });

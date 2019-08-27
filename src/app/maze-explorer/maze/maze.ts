@@ -94,8 +94,11 @@ export class Maze implements IMaze {
      * @param locationToSearch coordinate point to look for
      */
     public getValueAt(locationToSearch: Coordinate): string {
-        // TODO Exception handling to implemented
-        return this._mazeAsArray[locationToSearch.getX()][locationToSearch.getY()];
+        try {
+            return this._mazeAsArray[locationToSearch.getX()][locationToSearch.getY()];
+        } catch (e) {
+            return undefined;
+        }
     }
 
     /**
