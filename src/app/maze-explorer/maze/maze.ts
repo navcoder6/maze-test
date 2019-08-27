@@ -3,7 +3,7 @@ import { MazeBaseRules } from "src/app/maze-explorer/maze/rule-base";
 
 import * as _ from 'lodash';
 import { Coordinate } from "src/app/maze-explorer/maze/coordinate";
-import { StartMustExistRule, FinishMustExistRule } from "src/app/maze-explorer/maze/maze-rules";
+import { StartMustExistRule, FinishMustExistRule, AllowedCharacterRule } from "src/app/maze-explorer/maze/maze-rules";
 import { Utils } from "src/app/maze-explorer/shared/utils";
 
 /**
@@ -11,7 +11,6 @@ import { Utils } from "src/app/maze-explorer/shared/utils";
  */
 export class Maze implements IMaze {
     private _mazeAsString: string = '';
-    private _isValid: boolean = false;
     private rules: MazeBaseRules[] = [];
     private _mazeAsArray: string[][] = [];
 
@@ -23,25 +22,19 @@ export class Maze implements IMaze {
      * @param input string input required to create the maze
      */
     constructor(input: string) {
-        try {
-            this._mazeAsString = input.toUpperCase();
+        this._mazeAsString = input.toUpperCase();
 
-            this.addRules();
+        this.addRules();
 
-            this.fillAsArray();
+        this.fillAsArray();
 
-            this._isValid = true;
-        }
-        catch (e) {
-            // TODO custom exception handler to be created
-        }
     }
 
     /**
      * Method to dispose variables that might force memory leak
      */
     dispose() {
-        this.rules =[];
+        this.rules = [];
         this._mazeAsArray = [];
     }
 
@@ -54,6 +47,9 @@ export class Maze implements IMaze {
 
         const finishRule = new FinishMustExistRule(this._mazeAsString);
         this.rules.push(finishRule);
+
+        const allowedCharacterRule = new AllowedCharacterRule(this._mazeAsString);
+        this.rules.push(allowedCharacterRule);
     }
 
     /**
@@ -113,15 +109,11 @@ export class Maze implements IMaze {
      * Method to find if maze is valid or not
      */
     public isValid() {
-        if (this._isValid) {
-            let allRulesFullfilled = true;
-            _.forEach(this.rules, (rule) => {
-                allRulesFullfilled = rule.isFullfilled();
-                return allRulesFullfilled;
-            });
+        let allRulesFullfilled = true;
+        _.forEach(this.rules, (rule) => {
+            allRulesFullfilled = rule.isFullfilled();
             return allRulesFullfilled;
-        } else {
-            return this._isValid;
-        }
+        });
+        return allRulesFullfilled;
     }
 }

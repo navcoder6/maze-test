@@ -39,3 +39,24 @@ export class FinishMustExistRule extends MazeBaseRules {
         return this.structureToVerify.split(Utils.MazeContents.FINISH).length === 2;
     }
 }
+
+export class AllowedCharacterRule extends MazeBaseRules {
+    
+        private allowedCharacterExpression = /[ XSF]/;
+        /**
+         * Constructor to create maze FinishMustExistRule
+         * @param structureToVerify string input for the maze
+         */
+        constructor(structureToVerify) {
+            super(structureToVerify)
+
+        }
+        
+        /**
+         * Method to verify if the rule is followed or not
+         */
+        public isFullfilled() {
+            return this.structureToVerify.match(this.allowedCharacterExpression).length !== 0;
+            // return this.structureToVerify.split(Utils.MazeContents.FINISH).length === 2;
+        }
+}

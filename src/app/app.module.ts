@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { MazeExplorerModule } from './maze-explorer/maze-explorer.module';
+import { GlobalErrorHandler } from './shared/global-error-handler';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,7 @@ import { MazeExplorerModule } from './maze-explorer/maze-explorer.module';
     BrowserModule,
     MazeExplorerModule
   ],
-  providers: [],
+  providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
