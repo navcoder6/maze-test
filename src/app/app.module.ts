@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatIconModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { MazeExplorerModule } from './maze-explorer/maze-explorer.module';
 import { GlobalErrorHandler } from './shared/global-error-handler';
+
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { GlobalErrorHandler } from './shared/global-error-handler';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MatIconModule,
+    SharedModule,
     MazeExplorerModule
   ],
   providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],

@@ -1,19 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+
 import { MazeExplorerComponent } from './maze-explorer.component';
-import {MatButtonModule,MatInputModule,MatListModule,MatDividerModule,MatIconModule,MatTooltipModule} from '@angular/material';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    MatButtonModule,
-    MatInputModule,
-    MatListModule,
-    MatDividerModule,
-    MatIconModule,
-    MatTooltipModule
+    SharedModule
   ],
   declarations: [MazeExplorerComponent],
   exports:[MazeExplorerComponent]
