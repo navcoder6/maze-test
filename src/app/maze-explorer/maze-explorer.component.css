@@ -1,7 +1,29 @@
-.maze-data-allignment {
-    display: block;
+.fixed-textarea {
+    resize: none;
 }
 
-.maze-detail-boundary {
-    width: 50%;
+.inline-div {
+    display: inline-block;
+    width: 49%;
+}
+
+.top-allignment{
+    vertical-align: top;
+}
+
+.boundary{
+    border: 1px solid #e0e0e0;
+}
+
+.vertical-scrollable{
+    overflow-y: scroll;
+    height: 130px
+}
+
+.button-margin {
+    margin-right: 3px;
+}
+
+.float-div{
+    float: left;
 }

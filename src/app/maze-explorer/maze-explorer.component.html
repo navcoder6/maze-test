@@ -1,73 +1,79 @@
-<div>
-    <textarea matInput [(ngModel)]="mazeInput"></textarea>
-</div>
-<div>
-        <div *ngIf="!mazeToExplore || !mazeToExplore.isValid()">
-            <button mat-raised-button color="primary" (click) = 'validateMaze()'>Validate</button>
-        </div>
-    <div *ngIf="mazeToExplore && mazeToExplore.isValid()">
-        <button mat-raised-button color="primary" (click) = 'exploreMaze()'>Explore</button>
-        <button mat-raised-button color="primary" (click) = 'reset()'>Reset</button>
-    </div>
-</div>
+<h4>Please enter the maze you desire: </h4>
 
-<div *ngIf="!isExploring">
-    <div *ngIf="mazeToExplore && mazeToExplore.isValid()">
+<div class="inline-div">
     <div>
-        <label>Your maze input is valid</label>
+        <textarea cols="20" rows="10" class="fixed-textarea" matInput [(ngModel)]="mazeInput"></textarea>
     </div>
-    <!-- <div>
-        <label class='maze-data-allignment'>The total Count of Walls is:{{mazeToExplore.getWallsCount()}}</label>
-        <label class='maze-data-allignment'>The total Count of Empty Space is:{{mazeToExplore.getEmptySpaceCount()}}</label>
-    </div> -->
-    <div class="maze-detail-boundary">
-        <mat-list>
-            <mat-list-item>The total Count of Walls is: {{mazeToExplore.getWallsCount()}}</mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item>The total Count of Empty Space is: {{mazeToExplore.getEmptySpaceCount()}}</mat-list-item>
-        </mat-list>
+    <div>
+        <div *ngIf="!mazeToExplore || !mazeToExplore.isValid()">
+            <button mat-raised-button color="primary" (click)='validateMaze()'>Validate</button>
+        </div>
+        <div *ngIf="mazeToExplore && mazeToExplore.isValid()">
+            <button class="button-margin" mat-raised-button color="primary" (click)='exploreMaze()'>Explore</button>
+            <button class="button-margin" mat-raised-button color="primary" (click)='reset()'>Reset</button>
+        </div>
     </div>
-    </div>
-
     <div *ngIf="mazeToExplore && !mazeToExplore.isValid()">
         <label>Your maze input is InValid</label>
     </div>
 </div>
-<div *ngIf="isExploring">
-        <div class="maze-detail-boundary">
-                <mat-list>
-                    <mat-list-item>You have {{mazeExplorer.getInFrontItem()}} in front of you</mat-list-item>
-                    <mat-divider></mat-divider>
-                    <mat-list-item>Your possible movement options are: {{mazeExplorer.getAllMovementOptions()}}</mat-list-item>
-                </mat-list>
-        </div>
-        <div class="maze-detail-boundary">
-            <div>
-                    <span>
-                            <button mat-fab color="accent" matTooltip="Turn Left" (click) = 'turnLeft()'>
-                                    <mat-icon >rotate_left</mat-icon>
-                            </button>
-                            <button mat-fab color="accent" matTooltip="Turn Right" (click) = 'turnRight()'>
-                                    <mat-icon >rotate_right</mat-icon>
-                            </button>
-                    </span>
-            </div>
-            <div>
-                    <button mat-fab color="accent" matTooltip="Move Forward" (click) = 'moveForward()'>
-                            <mat-icon >directions_run</mat-icon>
-                    </button>
-            </div>
-        </div>
+<div class="inline-div top-allignment">
+    <div *ngIf="mazeToExplore && mazeToExplore.isValid()">
         <div>
-                <label>Record of where you have been</label>
+            <h4>In your maze : </h4>
+        </div>
+        <div class="boundary">
+            <mat-list>
+                <mat-list-item>The total Count of Walls is: {{mazeToExplore.getWallsCount()}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>The total Count of Empty Space is: {{mazeToExplore.getEmptySpaceCount()}}</mat-list-item>
+            </mat-list>
+        </div>
+    </div>
+</div>
+<div *ngIf="isExploring">
+    <div class="inline-div float-div">
+        <h4>Use buttons to Explore : </h4>
+        <button class="button-margin" mat-fab color="primary" matTooltip="Turn Left" (click)='turnLeft()'>
+            <mat-icon>rotate_left</mat-icon>
+        </button>
+        <button class="button-margin" mat-fab color="primary" matTooltip="Move Forward" (click)='moveForward()'>
+            <mat-icon>directions_run</mat-icon>
+        </button>
+        <button class="button-margin" mat-fab color="primary" matTooltip="Turn Right" (click)='turnRight()'>
+            <mat-icon>rotate_right</mat-icon>
+        </button>
+    </div>
+    <div class="inline-div">
+        <div>
+            <h4>Hey World Famous Explorer : </h4>
+        </div>
+        <div class="boundary">
+            <mat-list>
+                <mat-list-item>You are heading towards {{mazeExplorer.currentDirection}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>You have {{mazeExplorer.getInFrontItem()}} in front of you</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>Your possible movement options are: {{mazeExplorer.getAllMovementOptions()}}</mat-list-item>
+            </mat-list>
+        </div>
+    </div>
+    <div>
+        <div class="inline-div">
+            <h4>Record of where you have been</h4>
+            <div class="vertical-scrollable">
                 <ul>
-                        <li *ngFor="let record of mazeExplorer.getTraversedRecords()" >{{record}}</li>
+                    <li *ngFor="let record of mazeExplorer.getTraversedRecords()">{{record}}</li>
                 </ul>
             </div>
-        <div>
-            <label>Your route taken so far</label>
-            <ul>
-                    <li *ngFor="let route of mazeExplorer.getRouteDetails()" >{{route}}</li>
-            </ul>
         </div>
+        <div class="inline-div">
+            <h4>Your route taken so far</h4>
+            <div class="vertical-scrollable">
+                <ul>
+                    <li *ngFor="let route of mazeExplorer.getRouteDetails()">{{route}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
