@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">29.17% </span>
+        <span class="strong">28.57% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>21/72</span>
+        <span class='fraction'>22/77</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/16</span>
+        <span class='fraction'>0/20</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">28.57% </span>
+        <span class="strong">25% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>4/14</span>
+        <span class='fraction'>4/16</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">29.17% </span>
+        <span class="strong">28.95% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>21/72</span>
+        <span class='fraction'>22/76</span>
       </div>
     </div>
     <p class="quiet">
@@ -235,7 +235,16 @@
 <a name='L187'></a><a href='#L187'>187</a>
 <a name='L188'></a><a href='#L188'>188</a>
 <a name='L189'></a><a href='#L189'>189</a>
-<a name='L190'></a><a href='#L190'>190</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -345,6 +354,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -386,11 +402,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -472,7 +490,7 @@ export class MazeExplorer implements IExplorer {
         this.startPosition = this.mazeToExplore.startPointLocation;
         this<span class="cstat-no" title="statement not covered" >.currentLocation = this.startPosition;</span>
         this<span class="cstat-no" title="statement not covered" >.currentDirection = Utils.MazeExplorerDirection.EAST;</span>
-        this._traversedTrail.push(this.getCurrentPositionItem());
+        this._traversedTrail.push(this.getCurrentPositionAsString());
     }
 &nbsp;
     /**
@@ -480,13 +498,13 @@ export class MazeExplorer implements IExplorer {
      */<span class="fstat-no" title="function not covered" ></span>
     public moveForward() {
 <span class="cstat-no" title="statement not covered" >        // Before moving forward c</span>hk if wall is not present
-        const forwardItemInfo = this.getInFrontItem(this.currentDirection);
-        if (forwardItemInfo.item !== Utils.MazeContents.WALL) {
+        const forwardItemInfo = this.getInFrontItemBasedOnDirection(this.currentDirection);
+        if (forwardItemInfo.item &amp;&amp; (forwardItemInfo.item !== Utils.MazeContents.WALL)) {
             this.currentLocation = forwardItemInfo.location;
 &nbsp;
             // Log the  movement and the item tra<span class="fstat-no" title="function not covered" >ve</span>red by explorer
             this._routeDetail.push(Utils.MazeExplorerMovement.FORWARD);
-<span class="cstat-no" title="statement not covered" >            this._traversedTrail.push</span>(this.getCurrentPositionItem());
+<span class="cstat-no" title="statement not covered" >            this._traversedTrail.push</span>(this.getCurrentPositionAsString());
         }
     }
 &nbsp;
@@ -534,28 +552,36 @@ export class MazeExplorer implements IExplorer {
      */
     public turnRight() {
         switch (this.currentDirection) {<span class="fstat-no" title="function not covered" ></span>
-            case Utils.MazeExplorerDirection.EAST:
-                this.currentDirection = Utils.MazeExplorerDirection.SOUTH;
-<span class="cstat-no" title="statement not covered" >                break;</span>
-<span class="cstat-no" title="statement not covered" >            case Utils.MazeExplorerDirection.SOUTH:</span>
-                this.currentDirection = Utils.MazeExplorerDirection.WEST;
-<span class="cstat-no" title="statement not covered" >                break;</span>
-            case<span class="cstat-no" title="statement not covered" > Utils.MazeExplorerDirection.WEST:</span>
-<span class="cstat-no" title="statement not covered" >                this.cu</span>rrentDirection = Utils.MazeExplorerDirection.NORTH;
+            case Ut<span class="cstat-no" title="statement not covered" >ils.MazeExplorerDirection.EAST:</span>
+<span class="cstat-no" title="statement not covered" >                this.currentDirection = Utils<span class="fstat-no" title="function not covered" >.M</span>azeExplorerDirectio<span class="cstat-no" title="statement not covered" >n.SOUTH;</span></span>
                 break;
-            case<span class="cstat-no" title="statement not covered" > Utils.MazeExplorerDirection.NORTH:</span>
+            case Utils.MazeExplorerDirection.SOUTH:
+                this.currentDirection = Utils.MazeExplorerDirection.WEST;
+                break;
+            case Utils.MazeExplorerDirection.WEST:<span class="fstat-no" title="function not covered" ></span>
+                this.currentDirection = Utils.MazeExplorerDirection.NORTH;
+                break;
+<span class="cstat-no" title="statement not covered" >            case Utils.MazeExplorerDirection.NORTH:</span>
 <span class="cstat-no" title="statement not covered" >                this.currentDirection = Utils.MazeExplorerDirection.EAST;</span>
-<span class="cstat-no" title="statement not covered" >                break;</span>
-        }
-        this._ro<span class="cstat-no" title="statement not covered" >uteDetail.push(Utils.MazeExplorerMovement.RIGH</span>T);
+                break;
+        }<span class="cstat-no" title="statement not covered" ></span>
+        this._ro<span class="cstat-no" title="statement not covered" >uteDetail.push(Utils.MazeExplorerMovement.RIGHT);</span>
     }<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" ></span>
-    /**
-     * Method to<span class="cstat-no" title="statement not covered" > get the item in front depending upon the dire</span>ction asked
+&nbsp;
+    /**<span class="cstat-no" title="statement not covered" ></span>
+     * Method to<span class="cstat-no" title="statement not covered" > get the item in front depending upon current direction</span>
      */<span class="cstat-no" title="statement not covered" ></span>
-    public getIn<span class="cstat-no" title="statement not covered" >FrontIt</span>em(directionToLook: Utils.MazeExplorerDirection): Utils.IFrontItemInfo {
-        let frontPosition: Coordinate;
-<span class="cstat-no" title="statement not covered" >        let frontItem: string;</span>
+    public getInFrontItem() {
+        const it<span class="cstat-no" title="statement not covered" >em = this.getInFrontItemBasedOnDirection(this.</span>currentDirection).item;
+        return _<span class="cstat-no" title="statement not covered" >.findKey(Utils.MazeContents,(content)=&gt;content === item);</span>
+    }<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+    /**<span class="cstat-no" title="statement not covered" ></span>
+     * Method to<span class="cstat-no" title="statement not covered" > get the item in front depending upon the direction asked</span>
+     */<span class="cstat-no" title="statement not covered" ></span>
+    private getInFrontItemBasedOnDirection(directionToLook: Utils.MazeExplorerDirection): Utils.IFrontItemInfo {
+<span class="cstat-no" title="statement not covered" >        let frontPosition: Coordinate;</span>
+        let frontItem: string;
 &nbsp;
         frontPosition = _.clone(this.currentLocation);
 &nbsp;
@@ -568,11 +594,11 @@ export class MazeExplorer implements IExplorer {
                 break;
             case Utils.MazeExplorerDirection.SOUTH:
 &nbsp;
-                frontPosition.setY(frontPosition.getX() + 1)
-                frontItem = this.mazeToExplore.getV<span class="fstat-no" title="function not covered" >al</span>ueAt(frontPosition);
+                frontPosition.setX(frontPosition.ge<span class="fstat-no" title="function not covered" >tX</span>() + 1)
+                fron<span class="cstat-no" title="statement not covered" >tItem</span> = this.mazeToExplore.getValueAt(frontPosition);
 <span class="cstat-no" title="statement not covered" ></span>
-                break;<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >            case Utils.MazeExplorerDirection.<span class="fstat-no" title="function not covered" >WE</span>ST:</span>
+<span class="cstat-no" title="statement not covered" >                break;<span class="fstat-no" title="function not covered" ></span></span>
+            case Utils.MazeExp<span class="cstat-no" title="statement not covered" >lorerDirection.WEST:</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >                frontPosition.setY(frontPosition.</span>getY() - 1)
                 frontItem = this.mazeToExplore.getValueAt(frontPosition);
@@ -580,7 +606,7 @@ export class MazeExplorer implements IExplorer {
 <span class="cstat-no" title="statement not covered" >                break;</span>
             case Utils.MazeExplorerDirection.NORTH:
 &nbsp;
-                frontPosition.setY(frontPosition.getX() - 1)
+                frontPosition.setX(frontPosition.getX() - 1)
                 frontItem = this.mazeToExplore.getValueAt(frontPosition);
 &nbsp;
                 break;
@@ -593,10 +619,10 @@ export class MazeExplorer implements IExplorer {
     }
 &nbsp;
     /**
-     * Method to get the item at current location of explorer
+     * Method to get the current location of explorer in string format
      */
-    private getCurrentPositionItem() {
-        return this.mazeToExplore.getValueAt(this.currentLocation);
+    private getCurrentPositionAsString() {
+        return `(${this.currentLocation.getX()},${this.currentLocation.getY()})`;
     }
 &nbsp;
     /**
@@ -605,7 +631,8 @@ export class MazeExplorer implements IExplorer {
     public getAllMovementOptions() {
         let possibleOptions: Utils.MazeExplorerDirection[] = [];
         _.forIn(Utils.MazeExplorerDirection, (direction) =&gt; {
-            if (this.getInFrontItem(direction).item !== Utils.MazeContents.WALL) {
+            const itemInFront = this.getInFrontItemBasedOnDirection(direction).item;
+            if ( itemInFront &amp;&amp; (itemInFront!== Utils.MazeContents.WALL)) {
                 possibleOptions.push(direction);
             }
         });
@@ -619,7 +646,7 @@ export class MazeExplorer implements IExplorer {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Aug 26 2019 17:54:51 GMT+0530 (India Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Aug 28 2019 16:46:21 GMT+0530 (India Standard Time)
 </div>
 </div>
 <script src="..\..\..\..\prettify.js"></script>
