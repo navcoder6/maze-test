@@ -46,7 +46,7 @@ export class MazeExplorer implements IExplorer {
         this.startPosition = this.mazeToExplore.startPointLocation;
         this.currentLocation = this.startPosition;
         this.currentDirection = Utils.MazeExplorerDirection.EAST;
-        this._traversedTrail.push(this.getCurrentPositionItem());
+        this._traversedTrail.push(this.getCurrentPositionAsString());
     }
 
     /**
@@ -55,12 +55,12 @@ export class MazeExplorer implements IExplorer {
     public moveForward() {
         // Before moving forward chk if wall is not present
         const forwardItemInfo = this.getInFrontItemBasedOnDirection(this.currentDirection);
-        if (forwardItemInfo.item !== Utils.MazeContents.WALL) {
+        if (forwardItemInfo.item && (forwardItemInfo.item !== Utils.MazeContents.WALL)) {
             this.currentLocation = forwardItemInfo.location;
 
             // Log the  movement and the item travered by explorer
             this._routeDetail.push(Utils.MazeExplorerMovement.FORWARD);
-            this._traversedTrail.push(this.getCurrentPositionItem());
+            this._traversedTrail.push(this.getCurrentPositionAsString());
         }
     }
 
@@ -175,10 +175,10 @@ export class MazeExplorer implements IExplorer {
     }
 
     /**
-     * Method to get the item at current location of explorer
+     * Method to get the current location of explorer in string format
      */
-    private getCurrentPositionItem() {
-        return this.mazeToExplore.getValueAt(this.currentLocation);
+    private getCurrentPositionAsString() {
+        return `(${this.currentLocation.getX()},${this.currentLocation.getY()})`;
     }
 
     /**

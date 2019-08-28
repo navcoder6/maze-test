@@ -40,6 +40,18 @@ export class MazeExplorerComponent implements OnInit, OnDestroy {
     this.isExploring = true;
   }
 
+  turnLeft(){
+    this.mazeExplorer.turnLeft();
+  }
+
+  moveForward(){
+    this.mazeExplorer.moveForward();
+  }
+
+  turnRight(){
+    this.mazeExplorer.turnRight();
+  }
+
   ngOnDestroy() {
     this.mazeToExplore.dispose();
     this.mazeExplorer.dispose();

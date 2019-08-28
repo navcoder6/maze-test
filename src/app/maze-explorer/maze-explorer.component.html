@@ -40,5 +40,34 @@
                     <mat-divider></mat-divider>
                     <mat-list-item>Your possible movement options are: {{mazeExplorer.getAllMovementOptions()}}</mat-list-item>
                 </mat-list>
+        </div>
+        <div class="maze-detail-boundary">
+            <div>
+                    <span>
+                            <button mat-fab color="accent" matTooltip="Turn Left" (click) = 'turnLeft()'>
+                                    <mat-icon >rotate_left</mat-icon>
+                            </button>
+                            <button mat-fab color="accent" matTooltip="Turn Right" (click) = 'turnRight()'>
+                                    <mat-icon >rotate_right</mat-icon>
+                            </button>
+                    </span>
             </div>
+            <div>
+                    <button mat-fab color="accent" matTooltip="Move Forward" (click) = 'moveForward()'>
+                            <mat-icon >directions_run</mat-icon>
+                    </button>
+            </div>
+        </div>
+        <div>
+                <label>Record of where you have been</label>
+                <ul>
+                        <li *ngFor="let record of mazeExplorer.getTraversedRecords()" >{{record}}</li>
+                </ul>
+            </div>
+        <div>
+            <label>Your route taken so far</label>
+            <ul>
+                    <li *ngFor="let route of mazeExplorer.getRouteDetails()" >{{route}}</li>
+            </ul>
+        </div>
 </div>
